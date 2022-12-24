@@ -226,7 +226,7 @@ void MinBoxObjectBuilder::ReconstructPolygon(const Eigen::Vector3d &ref_ct,
         has_out = true;
       }
     }
-    // j:end; i:end
+    // j:end; i:end. This is a broken polygon. So line segment ij isn't side of this polygon.  
     else if ((i == min_point_index && j == max_point_index) || (i == max_point_index && j == min_point_index))
     {
       size_t k = (j + 1) % obj->polygon.points.size();
@@ -240,7 +240,7 @@ void MinBoxObjectBuilder::ReconstructPolygon(const Eigen::Vector3d &ref_ct,
       p_j[2] = obj->polygon.points[j].z;
 
       Eigen::Vector3d ray = p - min_point;
-      if (line[0] * ray[1] - ray[0] * line[1] < 0)
+      if (line[0] * ray[1] - ray[0] * line[1] < 0) // here use 0, not EPSILON
       {
       }
       else
